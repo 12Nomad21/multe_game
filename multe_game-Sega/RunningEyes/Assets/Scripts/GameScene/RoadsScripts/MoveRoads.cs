@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,13 +10,9 @@ public class MoveRoads : MonoBehaviour
     [Header("Roads")]
     public List<GameObject> _roadsList;
 
-    private void FixedUpdate()
-    {
-        MoveRoadsMethod(_speedMove, _roadsList);
-    }
-
     private void Update()
     {
+        MoveRoadsMethod(_speedMove, _roadsList);
         MoveRoadToStart(_edge, _roadSize, _roadsList);
     }
 
