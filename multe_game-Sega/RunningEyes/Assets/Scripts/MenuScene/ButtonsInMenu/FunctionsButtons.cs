@@ -13,11 +13,11 @@ public class FunctionsButtons : MonoBehaviour
         SceneManager.LoadScene(1);
     }
 
-    [SerializeField] Animator _settingsPanelAnimation;
-    [SerializeField] Animator _buttonsAnimation;
+    [SerializeField] private Animator _settingsPanelAnimation;
+    [SerializeField] private Animator _buttonsAnimation;
     public void OpenCloseSettingsPanel()
     {
-        if(_buttonsAnimation.GetBool("ButtonsOnLeft") == false && _settingsPanelAnimation.GetBool("SettingsPanelOnLeft") == false){
+        if(!_buttonsAnimation.GetBool("ButtonsOnLeft") && !_settingsPanelAnimation.GetBool("SettingsPanelOnLeft")){
             _buttonsAnimation.SetBool("ButtonsOnLeft", true);
             _settingsPanelAnimation.SetBool("SettingsPanelOnLeft", true);
         }
@@ -25,5 +25,10 @@ public class FunctionsButtons : MonoBehaviour
             _buttonsAnimation.SetBool("ButtonsOnLeft", false);
             _settingsPanelAnimation.SetBool("SettingsPanelOnLeft", false);
         }
+    }
+
+    public void ExitFromGame()
+    {
+        Application.Quit();
     }
 }

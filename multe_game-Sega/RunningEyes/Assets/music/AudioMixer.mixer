@@ -62,13 +62,18 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: d9d53639358bcb7458b2fd1a4744bafc
+    name: EffectsVolume
+  - guid: 8d0b169832960204c9070d8373765ab5
+    name: MyExposedParam
+  - guid: 1db2d90d2516eee45833928f32ee2e93
+    name: MusicVolume
   m_AudioMixerGroupViews:
   - guids:
     - 9d48d93c200b2a949b85880babd8ee33
     - 9ba54d2ea15e9e941aa2069ccf95d0ee
     - 715c7a427f889fc46ab276df1499cd14
-    - 04968cf922024934488c1a9f509801a9
     name: View
   m_CurrentViewIndex: 0
   m_TargetSnapshot: {fileID: 24500006}
@@ -84,7 +89,6 @@ AudioMixerGroupController:
   m_Children:
   - {fileID: 8395673979166936039}
   - {fileID: -6320394369221365987}
-  - {fileID: 8722293599864486450}
   m_Volume: 8d0b169832960204c9070d8373765ab5
   m_Pitch: 57167f4afb6951f4f9bdf85eade6100f
   m_Send: 00000000000000000000000000000000
@@ -117,22 +121,10 @@ AudioMixerSnapshotController:
   m_Name: Snapshot
   m_AudioMixer: {fileID: 24100000}
   m_SnapshotID: e01623992854d8a469a678fcdeb18fa7
-  m_FloatValues: {}
+  m_FloatValues:
+    d9d53639358bcb7458b2fd1a4744bafc: 0
+    1db2d90d2516eee45833928f32ee2e93: 0
   m_TransitionOverrides: {}
---- !u!244 &3551784408874043232
-AudioMixerEffectController:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: 
-  m_EffectID: 8b32bf7bc229aa542b4143a4fd25c9ea
-  m_EffectName: Attenuation
-  m_MixLevel: 932d6854af0a95a41b414897d2155c4c
-  m_Parameters: []
-  m_SendTarget: {fileID: 0}
-  m_EnableWetMix: 0
-  m_Bypass: 0
 --- !u!243 &8395673979166936039
 AudioMixerGroupController:
   m_ObjectHideFlags: 0
@@ -148,25 +140,6 @@ AudioMixerGroupController:
   m_Send: 00000000000000000000000000000000
   m_Effects:
   - {fileID: -7401708737767659021}
-  m_UserColorIndex: 0
-  m_Mute: 0
-  m_Solo: 0
-  m_BypassEffects: 0
---- !u!243 &8722293599864486450
-AudioMixerGroupController:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: UiSounds
-  m_AudioMixer: {fileID: 24100000}
-  m_GroupID: 04968cf922024934488c1a9f509801a9
-  m_Children: []
-  m_Volume: 76fa8c7167afdca448f8206d85d64fd3
-  m_Pitch: e573c3fc37a1f254681e9bac68afd506
-  m_Send: 00000000000000000000000000000000
-  m_Effects:
-  - {fileID: 3551784408874043232}
   m_UserColorIndex: 0
   m_Mute: 0
   m_Solo: 0
