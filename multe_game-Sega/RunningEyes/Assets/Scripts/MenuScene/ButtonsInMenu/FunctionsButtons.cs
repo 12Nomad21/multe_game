@@ -26,4 +26,9 @@ public class FunctionsButtons : MonoBehaviour
             _settingsPanelAnimation.SetBool("SettingsPanelOnLeft", false);
         }
     }
+
+    public void ExitFromGame()
+    {
+        Application.Quit();
+    }
 }
