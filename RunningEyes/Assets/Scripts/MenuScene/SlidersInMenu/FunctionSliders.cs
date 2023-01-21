@@ -6,7 +6,7 @@ public class FunctionSliders : MonoBehaviour
 {
     [SerializeField] private AudioMixerGroup _mixer;
     [Header("Sound values")]
-    [SerializeField] private float _minSoundValue = -60f;
+    [SerializeField] private float _minSoundValue = -80f;
     [SerializeField] private float _maxSoundValue = 0;
     [Header("Instanceing sliders")]
     [SerializeField] private Slider _musicVolumeSlider;
