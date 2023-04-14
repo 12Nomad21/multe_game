@@ -1,6 +1,4 @@
-using System;
 using System.Data;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
@@ -14,6 +12,7 @@ public class UserLogin : MonoBehaviour
 
     private IDbConnection connection;
     private IDbCommand dbcmd;
+    private IDataReader reader;
 
     [SerializeField] private GameObject mainCamera;
     [SerializeField] private List<GameObject> usersWindows;
@@ -24,7 +23,7 @@ public class UserLogin : MonoBehaviour
 
         connection.Open();
 
-
+        reader = dbcmd.ExecuteReader();
 
         connection.Close();
     }
@@ -33,22 +32,21 @@ public class UserLogin : MonoBehaviour
         Login();
     }
     private void Login(){
-        if (connection.State != ConnectionState.Open) {
-            connection.Open();
-        }
-
+        connection.Open();
 
         var username = usernameField.text;
         var password = passwordField.text;
 
-        Debug.Log(username);
-        Debug.Log(password);
-
-        dbcmd.CommandText = $"SELECT role FROM users WHERE username = 'SISA' AND password = '1234';";
+        dbcmd.CommandText = $"SELECT role FROM users WHERE username = '{username}' AND password = '{password}';";
         var result = dbcmd.ExecuteScalar();
         
+        while (reader.Read()){
+            Debug.Log(reader.GetString(1) + "-" + reader.GetString(2) + "-" + reader.GetString(3));
+        }
+
+        if(result != null){
             string role = result.ToString();
-            
+
             switch(role){
                 case "admin":
                     mainCamera.transform.position = usersWindows[(int)Users.admin].transform.position;
@@ -60,11 +58,13 @@ public class UserLogin : MonoBehaviour
                     mainCamera.transform.position = usersWindows[(int)Users.student].transform.position;
                     break;
             }
+        }
+        else{
+            infoMessage.text = $"Неверно введён логин или пароль";
+        }
 
         connection.Close();
     }
-
-
 
     enum Users {
         admin,
