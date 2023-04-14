@@ -1,8 +1,8 @@
 using UnityEngine;
 
-public class DisableGems : MonoBehaviour
+public class DisableBonus : MonoBehaviour
 {
-    [SerializeField] private float _edge = -150f;
+    [SerializeField] private float _edge = -500f;
 
     private void Update() {
         DisableGem();

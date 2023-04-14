@@ -8,9 +8,9 @@ public class GemSpawn : MonoBehaviour
     [Header("Pool settings")]
     [SerializeField] private int _poolCount = 3;
     [SerializeField] private bool _autoExpand = false;
-    [SerializeField] private DisableGems _gemPrefab;
+    [SerializeField] private DisableBonus _gemPrefab;
 
-    private PoolMono<DisableGems> _pool;
+    private PoolMono<DisableBonus> _pool;
     [Header("Spawn gem settings")]
     [SerializeField] private float _minYPosSpawnGem = -3.5f;
     [SerializeField] private float _maxYPosSpawnGem = 3.5f;
@@ -21,7 +21,7 @@ public class GemSpawn : MonoBehaviour
 
     private void Start()
     {
-        this._pool = new PoolMono<DisableGems>(_gemPrefab, _poolCount, this.transform); // инициализирование пула с этими параметрами
+        this._pool = new PoolMono<DisableBonus>(_gemPrefab, _poolCount, this.transform); // инициализирование пула с этими параметрами
         this._pool._autoExpand = this._autoExpand; // будем указывать авторсширение пула через инспектор
 
         _coroutine = CreateGem();
