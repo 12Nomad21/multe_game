@@ -6,69 +6,78 @@ using Mono.Data.Sqlite;
 
 public class UserLogin : MonoBehaviour
 {
-    [SerializeField] private TMP_Text usernameField;
-    [SerializeField] private TMP_Text passwordField;
+    [SerializeField] private TMP_InputField usernameField;
+    [SerializeField] private TMP_InputField passwordField;
     [SerializeField] private TMP_Text infoMessage;
 
-    private IDbConnection connection;
-    private IDbCommand dbcmd;
-    private IDataReader reader;
+    private string connectionString;
 
-    [SerializeField] private GameObject mainCamera;
-    [SerializeField] private List<GameObject> usersWindows;
+    [SerializeField] private Camera mainCamera;
+    public static Camera MainCamera;
+    [SerializeField] private List<GameObject> windows;
+    public static List<GameObject> windowsListForOtherScripts;
 
     private void Start() {
-        connection = new SqliteConnection($"URI=file:{Application.dataPath}/DataBases/TestDataBase.db");
-        dbcmd = connection.CreateCommand();
+        connectionString = $"URI=file:{Application.dataPath}/DataBases/TestDataBase.db";
 
-        connection.Open();
-
-        reader = dbcmd.ExecuteReader();
-
-        connection.Close();
+        windowsListForOtherScripts = windows;
+        MainCamera = mainCamera;
     }
 
-    public void ClickForLoggin(){
-        Login();
-    }
-    private void Login(){
-        connection.Open();
+    public void Login(){
+        string username = usernameField.text;
+        string password = passwordField.text;
 
-        var username = usernameField.text;
-        var password = passwordField.text;
+        using(IDbConnection connection = new SqliteConnection(connectionString)){
+            connection.Open();
 
-        dbcmd.CommandText = $"SELECT role FROM users WHERE username = '{username}' AND password = '{password}';";
-        var result = dbcmd.ExecuteScalar();
-        
-        while (reader.Read()){
-            Debug.Log(reader.GetString(1) + "-" + reader.GetString(2) + "-" + reader.GetString(3));
-        }
+            using(IDbCommand command = connection.CreateCommand()){
+                string SQLQuery = $"SELECT role FROM users WHERE username = '{username}' AND password = '{password}';";
+                command.CommandText = SQLQuery;
 
-        if(result != null){
-            string role = result.ToString();
+                using(IDataReader reader = command.ExecuteReader()){
+                    if(reader.Read()){
+                        infoMessage.text = "";
 
-            switch(role){
-                case "admin":
-                    mainCamera.transform.position = usersWindows[(int)Users.admin].transform.position;
-                    break;
-                case "teacher":
-                    mainCamera.transform.position = usersWindows[(int)Users.teacher].transform.position;
-                    break;
-                case "student":
-                    mainCamera.transform.position = usersWindows[(int)Users.student].transform.position;
-                    break;
+                        string role = reader.GetString(0);
+                        Debug.Log($"role = {role}");
+                        switch(role){
+                            case "admin":
+                                MainCamera.transform.position = new Vector3(0, (int)Windows.admin * -10, MainCamera.transform.position.z);
+                                break;
+                            case "teacher":
+                                MainCamera.transform.position = new Vector3(0, (int)Windows.teacherWindow * -10, MainCamera.transform.position.z);
+                                break;
+                            case "student":
+                                MainCamera.transform.position = new Vector3(0, (int)Windows.student * -10, MainCamera.transform.position.z);
+                                break;
+                        }
+                    }
+                    else{
+                        infoMessage.text = $"Неверно введён логин или пароль";
+                    }
+
+                    reader.Close();
+                }
             }
-        }
-        else{
-            infoMessage.text = $"Неверно введён логин или пароль";
+
+            connection.Close();
         }
 
-        connection.Close();
+        usernameField.text = "";
+        passwordField.text = "";
     }
 
-    enum Users {
+    public enum Windows {
+        autorization,
         admin,
-        teacher,
-        student
+        addUser,
+        teacherWindow,
+        createTask,
+        student,
+        viewTheory,
+        trainingWindow,
+        testingWindow,
+        viewResults
     }
 }
